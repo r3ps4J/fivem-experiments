@@ -1,0 +1,26 @@
+name: 'Pack resources'
+description: 'Packs resources into zip files for distribution'
+inputs:
+  resources:
+    description: 'Resources to pack'
+    required: true
+    type: string
+runs:
+  using: "composite"
+  steps:
+    - name: Run pack.sh for resources
+      run: |
+        # Convert the multi-line string into an array
+        mapfile -t resource_array <<< "$RESOURCES"
+
+        # Process each resource in the array
+        for resource in "${resource_array[@]}"; do
+          # Trim spaces
+          resource=$(echo $resource | xargs)
+
+          # Run the pack script for the resource in a subshell
+          (scripts/pack.sh "$resource")
+        done
+      shell: bash
+      env:
+        RESOURCES: ${{ inputs.resources }}
