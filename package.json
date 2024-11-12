@@ -1,5 +1,11 @@
 {
     "workspaces": [
         "resources/*"
-    ]
+    ],
+    "scripts": {
+        "build": "node scripts/build.js"
+    },
+    "devDependencies": {
+        "esbuild": "^0.24.0"
+    }
 }
