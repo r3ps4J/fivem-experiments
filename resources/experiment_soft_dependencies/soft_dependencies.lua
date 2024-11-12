@@ -1,5 +1,5 @@
 local function loadSoftDependencies(resourceName, type)
-    for i = 0, GetNumResourceMetadata(resourceName, type), 1 do
+	for i = 0, GetNumResourceMetadata(resourceName, type) - 1, 1 do
         local dependencyName = GetResourceMetadata(resourceName, type, i)
         local dependencyState = GetResourceState(dependencyName)
 
