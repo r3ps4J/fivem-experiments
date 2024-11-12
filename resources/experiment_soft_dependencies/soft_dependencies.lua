@@ -1,10 +1,10 @@
 local function loadSoftDependencies(resourceName, type)
-	for i = 0, GetNumResourceMetadata(resourceName, type) - 1, 1 do
+    for i = 0, GetNumResourceMetadata(resourceName, type) - 1, 1 do
         local dependencyName = GetResourceMetadata(resourceName, type, i)
         local dependencyState = GetResourceState(dependencyName)
 
         if dependencyState == "missing" then
-			print(string.format("Could not find soft dependency %s of resource %s", dependencyName, resourceName))
+            print(string.format("Could not find soft dependency %s of resource %s", dependencyName, resourceName))
             goto continue
         end
 
@@ -12,7 +12,7 @@ local function loadSoftDependencies(resourceName, type)
             local success = StartResource(dependencyName)
 
             if not success then
-				print(string.format("Could not start soft dependency %s of resource %s", dependencyName, resourceName))
+                print(string.format("Could not start soft dependency %s of resource %s", dependencyName, resourceName))
             end
         end
 
@@ -22,5 +22,5 @@ end
 
 AddEventHandler("onResourceStarting", function(resourceName)
     loadSoftDependencies(resourceName, "soft_dependency")
-	loadSoftDependencies(resourceName, "soft_dependencie") -- soft_dependencies without s
+    loadSoftDependencies(resourceName, "soft_dependencie") -- soft_dependencies without s
 end)
