@@ -18,8 +18,10 @@ runs:
           # Trim spaces
           resource=$(echo $resource | xargs)
 
-          # Run the pack script for the resource in a subshell
-          (bash scripts/pack.sh "$resource")
+          if [ -n "$resource" ]; then
+            # Run the pack script for the resource in a subshell
+            (bash scripts/pack.sh "$resource")
+          fi
         done
       shell: bash
       env:
