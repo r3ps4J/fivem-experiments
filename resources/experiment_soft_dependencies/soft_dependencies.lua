@@ -22,5 +22,5 @@ end
 
 AddEventHandler("onResourceStarting", function(resourceName)
     loadSoftDependencies(resourceName, "soft_dependency")
-    loadSoftDependencies(resourceName, "soft_dependencies")
+	loadSoftDependencies(resourceName, "soft_dependencie") -- soft_dependencies without s
 end)
