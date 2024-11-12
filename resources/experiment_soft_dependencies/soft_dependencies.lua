@@ -4,7 +4,7 @@ local function loadSoftDependencies(resourceName, type)
         local dependencyState = GetResourceState(dependencyName)
 
         if dependencyState == "missing" then
-            print(("Could not find soft dependency %s of resource %s").format(dependencyName, resourceName))
+			print(string.format("Could not find soft dependency %s of resource %s", dependencyName, resourceName))
             goto continue
         end
 
@@ -12,7 +12,7 @@ local function loadSoftDependencies(resourceName, type)
             local success = StartResource(dependencyName)
 
             if not success then
-                print(("Could not start soft dependency %s of resource %s").format(dependencyName, resourceName))
+				print(string.format("Could not start soft dependency %s of resource %s", dependencyName, resourceName))
             end
         end
 
