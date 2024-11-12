@@ -19,7 +19,7 @@ runs:
           resource=$(echo $resource | xargs)
 
           # Run the pack script for the resource in a subshell
-          (scripts/pack.sh "$resource")
+          (bash scripts/pack.sh "$resource")
         done
       shell: bash
       env:
