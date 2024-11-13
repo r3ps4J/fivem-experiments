@@ -1,5 +1,5 @@
 const { build } = require("esbuild");
-const { readdirSync, existsSync } = require("fs");
+const { readdirSync, existsSync, writeFileSync } = require("fs");
 
 const resources = readdirSync("./resources");
 
@@ -9,6 +9,15 @@ for (const resource of resources) {
     }
 
     console.log(`Building resource '${resource}'`);
+
+    writeFileSync(
+        `./resources/${resource}/.yarn.installed`,
+        new Intl.DateTimeFormat("en-NL", {
+            timeZone: "UTC",
+            timeStyle: "long",
+            dateStyle: "full",
+        }).format(new Date())
+    );
 
     build({
         bundle: true,
