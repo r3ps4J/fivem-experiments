@@ -3,7 +3,7 @@ import semver from "semver";
 function loadVersionedDependencies(resourceName: string, metadataKey: string) {
     for (let i = 0; i < GetNumResourceMetadata(resourceName, metadataKey); i++) {
         /** @type {string} */
-        const dependency = GetResourceMetadata(resourceName, metadataKey, i)
+        const dependency = GetResourceMetadata(resourceName, metadataKey, i);
 
         if (dependency.includes(":")) {
             const re = RegExp("(^([A-Za-z/0-9_-]+)(?::(.+))?$)");
@@ -11,15 +11,15 @@ function loadVersionedDependencies(resourceName: string, metadataKey: string) {
             const found = dependency.match(re);
 
             if (!found) {
-                console.log(`Could not parse dependency ${dependency} for resource ${resourceName}`)
+                console.log(`Could not parse dependency ${dependency} for resource ${resourceName}`);
                 return false;
             }
 
             const dependencyName = found[2];
             const dependencyState = GetResourceState(dependencyName);
-            
+
             if (dependencyState === "missing") {
-                console.log(`Could not find dependency ${dependency} for resource ${resourceName}`)
+                console.log(`Could not find dependency ${dependency} for resource ${resourceName}`);
                 return false;
             }
 
@@ -47,7 +47,7 @@ function loadVersionedDependencies(resourceName: string, metadataKey: string) {
                 const success = StartResource(dependencyName);
 
                 if (!success) {
-                    console.log(`Could not start dependency '${dependency}' for resource '${resourceName}'.`)
+                    console.log(`Could not start dependency '${dependency}' for resource '${resourceName}'.`);
                     return false;
                 }
             }
@@ -60,8 +60,8 @@ function loadVersionedDependencies(resourceName: string, metadataKey: string) {
 on("onResourceStarting", (resourceName: string) => {
     const success = loadVersionedDependencies(resourceName, "experiment_versioned_dependency") &&
         loadVersionedDependencies(resourceName, "experiment_versioned_dependencie"); // experiment_versioned_dependencies without s
-    
+
     if (!success) {
         CancelEvent();
     }
-})
+});
