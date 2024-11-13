@@ -1,10 +1,10 @@
 const { build } = require("esbuild");
-const fs = require("fs");
+const { readdirSync, existsSync } = require("fs");
 
-const resources = fs.readdirSync("./resources")
+const resources = readdirSync("./resources");
 
 for (const resource of resources) {
-    if (!fs.existsSync(`./resources/${resource}/package.json`)) {
+    if (!existsSync(`./resources/${resource}/package.json`)) {
         continue;
     }
 
