@@ -1,6 +1,8 @@
 import semver from "semver";
 
 function loadVersionedDependencies(resourceName: string, metadataKey: string) {
+    const allowExactVersion = GetConvarInt("experiment_versioned_dependencies:allow_exact_version", 1) == 1;
+
     for (let i = 0; i < GetNumResourceMetadata(resourceName, metadataKey); i++) {
         /** @type {string} */
         const dependency = GetResourceMetadata(resourceName, metadataKey, i);
@@ -26,7 +28,7 @@ function loadVersionedDependencies(resourceName: string, metadataKey: string) {
             const requiredVersion = found[3];
             const actualVersion = GetResourceMetadata(dependencyName, "version", 0);
 
-            if (requiredVersion !== actualVersion) {
+            if (!allowExactVersion || requiredVersion !== actualVersion) {
                 // If they're not exactly equal, try to match using semver
                 if (!semver.valid(actualVersion)) {
                     console.log(`Version '${actualVersion}' of dependency '${dependencyName}' is not valid.`);
