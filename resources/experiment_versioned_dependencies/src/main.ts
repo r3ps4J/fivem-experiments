@@ -28,21 +28,18 @@ function loadVersionedDependencies(resourceName: string, metadataKey: string) {
             const requiredVersion = found[3];
             const actualVersion = GetResourceMetadata(dependencyName, "version", 0);
 
-            if (!allowExactVersion || requiredVersion !== actualVersion) {
-                // If they're not exactly equal, try to match using semver
-                if (!semver.valid(actualVersion)) {
-                    console.log(`Version '${actualVersion}' of dependency '${dependencyName}' is not valid.`);
-                    return false;
-                }
-                if (!semver.validRange(requiredVersion)) {
-                    console.log(`Required version range '${requiredVersion}' of dependency '${dependencyName}' in resource '${resourceName}' is not valid.`);
-                    return false;
-                }
+            if (!semver.valid(actualVersion)) {
+                console.log(`Version '${actualVersion}' of dependency '${dependencyName}' is not valid.`);
+                return false;
+            }
+            if (!semver.validRange(requiredVersion)) {
+                console.log(`Required version range '${requiredVersion}' of dependency '${dependencyName}' in resource '${resourceName}' is not valid.`);
+                return false;
+            }
 
-                if (!semver.satisfies(actualVersion, requiredVersion)) {
-                    console.log(`Dependency '${dependencyName}' version '${actualVersion}' does not satisfy version '${requiredVersion}' required by resource '${resourceName}'.`);
-                    return false;
-                }
+            if (!semver.satisfies(actualVersion, requiredVersion)) {
+                console.log(`Dependency '${dependencyName}' version '${actualVersion}' does not satisfy version '${requiredVersion}' required by resource '${resourceName}'.`);
+                return false;
             }
 
             if (dependencyState !== "started" && dependencyState !== "starting") {
